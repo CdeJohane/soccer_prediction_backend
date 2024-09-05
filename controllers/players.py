@@ -52,6 +52,7 @@ def update_points(match_id, score_diff):
     conn.close()
 
 @player_bp.route('/add_player', method = ['POST'])
+@cross_origin()
 def add_player(name, code):
     conn = get_db_connection()
     # Check if player exists
@@ -69,3 +70,14 @@ def add_player(name, code):
         return jsonify({"success": False})
     conn.close()
     return jsonify({"success": True})
+
+@player_bp.route("/all_players",method = ['GET'])
+@cross_origin()
+def all_players():
+    conn = get_db_connection()
+    # Get all players
+    player_response =  conn.execute(
+        'SELECT * FROM player ORDER BY points DESC'
+    )
+    playersDict = [dict(player) for player in player_response]
+    return jsonify(playersDict)
