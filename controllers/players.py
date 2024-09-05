@@ -10,6 +10,9 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+# Blueprint
+player_bp = Blueprint("player", __name__)
+
 # Update Scores
 def update_points(match_id, score_diff):
     # Tweak Scorediff to represent home or away win
@@ -47,3 +50,22 @@ def update_points(match_id, score_diff):
         )
         conn.commit()
     conn.close()
+
+@player_bp.route('/add_player', method = ['POST'])
+def add_player(name, code):
+    conn = get_db_connection()
+    # Check if player exists
+    checkPlay = conn.execute(
+        'SELECT * FROM player WHERE player_code = ?',
+        (code)
+    ).fetchall()
+    if not checkPlay:
+        conn.execute(
+            "INSERT INTO player (player_name, player_code) VALUES (?, ?)",
+            (name, code)
+        )
+        conn.commit()
+    else:
+        return jsonify({"success": False})
+    conn.close()
+    return jsonify({"success": True})
