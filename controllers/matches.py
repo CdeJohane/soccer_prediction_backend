@@ -3,6 +3,7 @@ import json
 from flask_cors import cross_origin 
 import pandas as pd
 import sqlite3
+from players import update_points
 
 # Get Connection
 def get_db_connection():
@@ -34,6 +35,7 @@ def update_match(match_id, home_score, away_score, winner):
     )
     conn.commit()
     conn.close()
+    update_points(match_id, home_score-away_score)
     return jsonify({"success": True})
 
 @match_bp.route('/delete_match', method=['POST'])
