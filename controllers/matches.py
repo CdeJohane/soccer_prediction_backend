@@ -29,8 +29,7 @@ def insert_match(home, away):
 def update_match(match_id, home_score, away_score, winner):
     conn = get_db_connection()
     conn.execute(
-        'UPDATE matches SET complete = ?, home_team_score = ?, away_team_score = ?, winner = ?, scores_updated = ?'
-        'WHERE id = ?',
+        'UPDATE matches SET complete = ?, home_team_score = ?, away_team_score = ?, winner = ?, scores_updated = ? WHERE id = ?',
         (1, home_score, away_score,winner, 0)
     )
     conn.commit()
