@@ -3,7 +3,6 @@ import json
 from flask_cors import cross_origin 
 import pandas as pd
 import sqlite3
-from players import update_points
 
 # Get Connection
 def get_db_connection():
@@ -13,7 +12,7 @@ def get_db_connection():
 
 
 predict_bp = Blueprint("predict", __name__)
-@predict_bp.route("/add_prediction", method =['POST'])
+@predict_bp.route("/add_prediction", methods =['POST'])
 @cross_origin
 def add_prediction(player_id, match_id, home_or_away):
     conn = get_db_connection()

@@ -51,7 +51,7 @@ def update_points(match_id, score_diff):
         conn.commit()
     conn.close()
 
-@player_bp.route('/add_player', method = ['POST'])
+@player_bp.route('/add_player', methods = ['POST'])
 @cross_origin()
 def add_player(name, code):
     conn = get_db_connection()
@@ -71,7 +71,7 @@ def add_player(name, code):
     conn.close()
     return jsonify({"success": True})
 
-@player_bp.route("/all_players",method = ['GET'])
+@player_bp.route("/all_players",methods = ['GET'])
 @cross_origin()
 def all_players():
     conn = get_db_connection()

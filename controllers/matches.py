@@ -3,7 +3,7 @@ import json
 from flask_cors import cross_origin 
 import pandas as pd
 import sqlite3
-from players import update_points
+from controllers.players import update_points
 
 # Get Connection
 def get_db_connection():
@@ -37,7 +37,7 @@ def update_match(match_id, home_score, away_score, winner):
     update_points(match_id, home_score-away_score)
     return jsonify({"success": True})
 
-@match_bp.route('/delete_match', method=['POST'])
+@match_bp.route('/delete_match', methods=['POST'])
 @cross_origin()
 def delete_match(match_id):
     conn = get_db_connection()
@@ -49,7 +49,7 @@ def delete_match(match_id):
     conn.close()
     return jsonify({"success": True})
 
-@match_bp.route('/get_fixtures', method = ['GET'])
+@match_bp.route('/get_fixtures', methods = ['GET'])
 @cross_origin()
 def fixture():
     conn = get_db_connection()
@@ -61,7 +61,7 @@ def fixture():
     conn.close()
     return jsonify(fixtures)
 
-@match_bp.route('/get_results', method = ['GET'])
+@match_bp.route('/get_results', methods = ['GET'])
 @cross_origin()
 def fixtures():
     conn = get_db_connection()
