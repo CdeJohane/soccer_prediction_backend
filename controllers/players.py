@@ -62,8 +62,8 @@ def add_player(name, code):
     ).fetchall()
     if not checkPlay:
         conn.execute(
-            "INSERT INTO player (player_name, player_code) VALUES (?, ?)",
-            (name, code)
+            "INSERT INTO player (player_name, player_code) VALUES (?, ?, ?)",
+            (name, code, 0)
         )
         conn.commit()
     else:
